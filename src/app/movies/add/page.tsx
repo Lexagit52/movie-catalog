@@ -1,22 +1,19 @@
-'use client'; // чтобы использовать React hooks
+'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useMoviesStore } from '../../store/useMoviesStore';
 
 export default function AddMoviePage() {
   const [title, setTitle] = useState('');
   const [year, setYear] = useState('');
+  const addMovie = useMoviesStore((state) => state.addMovie);
   const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Пока просто выводим в консоль и возвращаем на страницу списка
-    console.log({ title, year });
-
-    // Здесь позже добавим сохранение данных в состояние или API
-
-    router.push('/movies'); // возвращаем на список
+    addMovie({ title, year });
+    router.push('/movies');
   };
 
   return (
