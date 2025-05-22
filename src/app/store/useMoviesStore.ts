@@ -5,6 +5,27 @@ export interface Movie {
   id: number;
   title: string;
   year: number;
+  description?: string;  // описание
+  link?: string;         // ссылка на видео (YouTube URL)
+}
+
+
+interface MoviesState {
+  movies: Movie[];
+  addMovie: (movie: Movie) => void;
+  removeMovie: (id: number) => void;
+  updateMovie: (movie: Movie) => void;
+}
+
+
+// src/app/store/useMoviesStore.ts
+
+export interface Movie {
+  id: number;
+  title: string;
+  year: number;
+  link?: string;
+  description?: string;
 }
 
 interface MoviesState {
@@ -14,7 +35,7 @@ interface MoviesState {
   updateMovie: (movie: Movie) => void;
 }
 
-export const useMoviesStore = create<MoviesState>((set, get) => ({
+export const useMoviesStore = create<MoviesState>((set) => ({
   movies: [],
 
   addMovie: (movie) =>

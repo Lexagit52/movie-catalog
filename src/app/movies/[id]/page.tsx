@@ -23,11 +23,28 @@ export default function MovieDetailsPage() {
   }
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-2">{movie.title}</h1>
-      <p className="text-gray-700 mb-4">Год выпуска: {movie.year}</p>
+    <div className="p-6 max-w-5xl mx-auto">
+      <h1 className="text-3xl font-bold mb-4">{movie.title}</h1>
+
+      {movie.link ? (
+        <div className="relative" style={{ paddingTop: '56.25%' /* 16:9 */ }}>
+          <iframe
+            src={movie.link}
+            title={movie.title}
+            allowFullScreen
+            className="absolute top-0 left-0 w-full h-full border rounded"
+          />
+        </div>
+      ) : (
+        <p className="mb-4 text-gray-500">Видео отсутствует</p>
+      )}
+
+      {movie.description && (
+        <p className="mt-4 text-gray-700">{movie.description}</p>
+      )}
+
       <button
-        className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+        className="mt-6 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
         onClick={() => router.back()}
       >
         Назад
