@@ -4,21 +4,23 @@ export interface Movie {
   id: number;
   title: string;
   year: number;
-  genre: string;         // жанр
-  link?: string;         // ссылка на видео
-  description?: string;  // описание
+  genre: string;
+  link?: string;
+  description?: string;
 }
 
 interface MoviesState {
   movies: Movie[];
+  recentlyViewed: Movie[];
   filterGenre: string;
   setFilterGenre: (genre: string) => void;
   addMovie: (movie: Movie) => void;
   removeMovie: (id: number) => void;
   updateMovie: (movie: Movie) => void;
+  markAsViewed: (movie: Movie) => void;
 }
 
-export const useMoviesStore = create<MoviesState>((set) => ({
+export const useMoviesStore = create<MoviesState>((set, get) => ({
   movies: [
     {
       id: 1,
@@ -78,6 +80,8 @@ export const useMoviesStore = create<MoviesState>((set) => ({
     },
   ],
 
+  recentlyViewed: [],
+
   filterGenre: '',
   setFilterGenre: (genre) => set({ filterGenre: genre }),
 
@@ -91,4 +95,11 @@ export const useMoviesStore = create<MoviesState>((set) => ({
     set((state) => ({
       movies: state.movies.map((m) => (m.id === movie.id ? movie : m)),
     })),
+
+  markAsViewed: (movie) => {
+    const existing = get().recentlyViewed.filter((m) => m.id !== movie.id);
+    set(() => ({
+      recentlyViewed: [movie, ...existing].slice(0, 10),
+    }));
+  },
 }));

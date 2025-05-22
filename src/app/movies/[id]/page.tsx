@@ -7,7 +7,9 @@ import { useEffect, useState } from 'react';
 export default function MovieDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
+
   const movies = useMoviesStore((state) => state.movies);
+  const markAsViewed = useMoviesStore((state) => state.markAsViewed);
 
   const [movieId, setMovieId] = useState<number | null>(null);
 
@@ -18,6 +20,10 @@ export default function MovieDetailsPage() {
 
   const movie = movies.find((m) => m.id === movieId);
 
+  useEffect(() => {
+    if (movie) markAsViewed(movie);
+  }, [movie, markAsViewed]);
+
   if (!movie) {
     return <p className="p-6">Фильм не найден</p>;
   }
@@ -27,7 +33,7 @@ export default function MovieDetailsPage() {
       <h1 className="text-3xl font-bold mb-4">{movie.title}</h1>
 
       {movie.link ? (
-        <div className="relative" style={{ paddingTop: '56.25%' /* 16:9 */ }}>
+        <div className="relative" style={{ paddingTop: '56.25%' }}>
           <iframe
             src={movie.link}
             title={movie.title}

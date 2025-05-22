@@ -7,6 +7,7 @@ export default function Header() {
         <Link href="/">Главная</Link>
         <Link href="/movies">Фильмы</Link>
         <Link href="/movies/add">Добавить фильм</Link>
+        <Link href="/movies/recent" >Последние</Link>
         <Link href="/about">О приложении</Link>
       </nav>
     </header>
