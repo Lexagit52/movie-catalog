@@ -1,26 +1,62 @@
-// src/app/movies/page.tsx
-
 'use client';
 
 import Link from 'next/link';
 import { useMoviesStore } from '@/app/store/useMoviesStore';
 import { Movie } from '@/app/store/useMoviesStore';
+import { useMemo } from 'react';
 
 export default function MoviesPage() {
   const movies = useMoviesStore((state) => state.movies);
+  const filterGenre = useMoviesStore((state) => state.filterGenre);
+  const setFilterGenre = useMoviesStore((state) => state.setFilterGenre);
   const removeMovie = useMoviesStore((state) => state.removeMovie);
+
+  // Получаем уникальные жанры для фильтрации
+  const genres = useMemo(() => {
+    const uniqueGenres = Array.from(new Set(movies.map((m) => m.genre)));
+    uniqueGenres.sort();
+    return uniqueGenres;
+  }, [movies]);
+
+  // Фильтруем фильмы по выбранному жанру
+  const filteredMovies = useMemo(() => {
+    if (!filterGenre) return movies;
+    return movies.filter((m) => m.genre === filterGenre);
+  }, [movies, filterGenre]);
 
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Список фильмов</h1>
-      <Link
-        href="/movies/add"
-        className="inline-block mb-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-      >
-        Добавить фильм
-      </Link>
+      
+    
+
+      {/* Фильтр по жанрам */}
+      <div className="mb-6">
+        <label className="font-semibold mr-4">Фильтр по жанру:</label>
+        <select
+          value={filterGenre}
+          onChange={(e) => setFilterGenre(e.target.value)}
+          className="border px-3 py-2 rounded"
+        >
+          <option value="">Все жанры</option>
+          {genres.map((genre) => (
+            <option key={genre} value={genre}>
+              {genre}
+            </option>
+          ))}
+        </select>
+        {filterGenre && (
+          <button
+            onClick={() => setFilterGenre('')}
+            className="ml-4 text-sm text-red-600 hover:underline"
+          >
+            Сбросить фильтр
+          </button>
+        )}
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {movies.map(({ id, title, year, genre, description, link }: Movie) => (
+        {filteredMovies.map(({ id, title, year, genre, description, link }: Movie) => (
           <div key={id} className="card bg-white rounded-lg shadow p-4">
             {link && (
               <iframe

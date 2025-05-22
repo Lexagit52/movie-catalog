@@ -1,47 +1,22 @@
-// src/app/store/useMoviesStore.ts
 import { create } from 'zustand';
 
 export interface Movie {
   id: number;
   title: string;
   year: number;
+  genre: string;         // жанр
+  link?: string;         // ссылка на видео
   description?: string;  // описание
-  link?: string;         // ссылка на видео (YouTube URL)
 }
-
 
 interface MoviesState {
   movies: Movie[];
+  filterGenre: string;
+  setFilterGenre: (genre: string) => void;
   addMovie: (movie: Movie) => void;
   removeMovie: (id: number) => void;
   updateMovie: (movie: Movie) => void;
 }
-
-
-// src/app/store/useMoviesStore.ts
-
-// src/app/store/useMoviesStore.ts
-
-export interface Movie {
-  id: number;
-  title: string;
-  year: number;
-  link?: string;
-  description?: string;
-  genre: string;  // новое поле жанр
-}
-
-
-interface MoviesState {
-  movies: Movie[];
-  addMovie: (movie: Movie) => void;
-  removeMovie: (id: number) => void;
-  updateMovie: (movie: Movie) => void;
-}
-
-
-
-// src/app/store/useMoviesStore.ts
 
 export const useMoviesStore = create<MoviesState>((set) => ({
   movies: [
@@ -102,6 +77,9 @@ export const useMoviesStore = create<MoviesState>((set) => ({
       description: 'История превращения комика в опасного преступника.',
     },
   ],
+
+  filterGenre: '',
+  setFilterGenre: (genre) => set({ filterGenre: genre }),
 
   addMovie: (movie) =>
     set((state) => ({ movies: [...state.movies, movie] })),
