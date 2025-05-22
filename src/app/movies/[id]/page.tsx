@@ -10,6 +10,8 @@ export default function MovieDetailsPage() {
 
   const movies = useMoviesStore((state) => state.movies);
   const markAsViewed = useMoviesStore((state) => state.markAsViewed);
+  const toggleFavorite = useMoviesStore((state) => state.toggleFavorite);
+  const isFavorite = useMoviesStore((state) => state.isFavorite);
 
   const [movieId, setMovieId] = useState<number | null>(null);
 
@@ -27,6 +29,8 @@ export default function MovieDetailsPage() {
   if (!movie) {
     return <p className="p-6">Фильм не найден</p>;
   }
+
+  const favorite = isFavorite(movie.id);
 
   return (
     <div className="p-6 max-w-5xl mx-auto">
@@ -49,12 +53,23 @@ export default function MovieDetailsPage() {
         <p className="mt-4 text-gray-700">{movie.description}</p>
       )}
 
-      <button
-        className="mt-6 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
-        onClick={() => router.back()}
-      >
-        Назад
-      </button>
+      <div className="mt-6 flex gap-4">
+        <button
+          className={`px-4 py-2 rounded ${
+            favorite ? 'bg-yellow-400 text-black' : 'bg-gray-600 text-white'
+          }`}
+          onClick={() => toggleFavorite(movie)}
+        >
+          {favorite ? 'Удалить из избранного' : 'Добавить в избранное'}
+        </button>
+
+        <button
+          className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
+          onClick={() => router.back()}
+        >
+          Назад
+        </button>
+      </div>
     </div>
   );
 }

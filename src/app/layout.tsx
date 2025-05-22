@@ -1,6 +1,7 @@
 import './globals.css'
 import Header from './components/Header'
 
+import Footer from './components/Footer'
 
 
 export const metadata = {
@@ -12,9 +13,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ru">
       <body>
-        <Header />
+        <Header />   
         <main className="container mx-auto mt-4">{children}</main>
+         <Footer />
       </body>
     </html>
   )
+
 }

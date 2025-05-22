@@ -12,12 +12,15 @@ export interface Movie {
 interface MoviesState {
   movies: Movie[];
   recentlyViewed: Movie[];
+  favorites: Movie[];
   filterGenre: string;
   setFilterGenre: (genre: string) => void;
   addMovie: (movie: Movie) => void;
   removeMovie: (id: number) => void;
   updateMovie: (movie: Movie) => void;
   markAsViewed: (movie: Movie) => void;
+  toggleFavorite: (movie: Movie) => void;
+  isFavorite: (id: number) => boolean;
 }
 
 export const useMoviesStore = create<MoviesState>((set, get) => ({
@@ -82,6 +85,8 @@ export const useMoviesStore = create<MoviesState>((set, get) => ({
 
   recentlyViewed: [],
 
+  favorites: [],
+
   filterGenre: '',
   setFilterGenre: (genre) => set({ filterGenre: genre }),
 
@@ -89,11 +94,17 @@ export const useMoviesStore = create<MoviesState>((set, get) => ({
     set((state) => ({ movies: [...state.movies, movie] })),
 
   removeMovie: (id) =>
-    set((state) => ({ movies: state.movies.filter((m) => m.id !== id) })),
+    set((state) => ({
+      movies: state.movies.filter((m) => m.id !== id),
+      favorites: state.favorites.filter((m) => m.id !== id),
+      recentlyViewed: state.recentlyViewed.filter((m) => m.id !== id),
+    })),
 
   updateMovie: (movie) =>
     set((state) => ({
       movies: state.movies.map((m) => (m.id === movie.id ? movie : m)),
+      favorites: state.favorites.map((m) => (m.id === movie.id ? movie : m)),
+      recentlyViewed: state.recentlyViewed.map((m) => (m.id === movie.id ? movie : m)),
     })),
 
   markAsViewed: (movie) => {
@@ -101,5 +112,19 @@ export const useMoviesStore = create<MoviesState>((set, get) => ({
     set(() => ({
       recentlyViewed: [movie, ...existing].slice(0, 10),
     }));
+  },
+
+  toggleFavorite: (movie) => {
+    const { favorites } = get();
+    const isFav = favorites.some((m) => m.id === movie.id);
+    if (isFav) {
+      set({ favorites: favorites.filter((m) => m.id !== movie.id) });
+    } else {
+      set({ favorites: [movie, ...favorites] });
+    }
+  },
+
+  isFavorite: (id) => {
+    return get().favorites.some((m) => m.id === id);
   },
 }));
