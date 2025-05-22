@@ -1,5 +1,3 @@
-// src/app/movies/page.tsx
-
 'use client';
 
 import Link from 'next/link';
@@ -26,6 +24,12 @@ export default function MoviesPage() {
               {title} ({year})
             </div>
             <div className="flex gap-2">
+              <Link
+                href={`/movies/${id}`}
+                className="text-purple-600 hover:underline"
+              >
+                Подробнее
+              </Link>
               <Link
                 href={`/movies/edit/${id}`}
                 className="text-blue-600 hover:underline"
