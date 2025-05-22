@@ -15,17 +15,19 @@ export default function AddMoviePage() {
   const [year, setYear] = useState('');
   const [link, setLink] = useState('');
   const [description, setDescription] = useState('');
+  const [genre, setGenre] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title || !year) return;
+    if (!title || !year || !genre) return; // жанр обязательный
 
     addMovie({
       id: Date.now(),
       title,
       year: parseInt(year),
-      link: getEmbedLink(link.trim()), // Преобразуем ссылку
+      link: getEmbedLink(link.trim()),
       description,
+      genre,
     });
 
     router.push('/movies');
@@ -72,6 +74,17 @@ export default function AddMoviePage() {
             onChange={(e) => setDescription(e.target.value)}
             className="w-full border px-3 py-2 rounded"
             rows={4}
+          />
+        </div>
+        <div>
+          <label className="block font-semibold">Жанр</label>
+          <input
+            type="text"
+            value={genre}
+            onChange={(e) => setGenre(e.target.value)}
+            className="w-full border px-3 py-2 rounded"
+            placeholder="например, Комедия, Драма, Фантастика"
+            required
           />
         </div>
         <button

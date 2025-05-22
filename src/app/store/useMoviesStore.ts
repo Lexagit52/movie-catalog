@@ -20,13 +20,17 @@ interface MoviesState {
 
 // src/app/store/useMoviesStore.ts
 
+// src/app/store/useMoviesStore.ts
+
 export interface Movie {
   id: number;
   title: string;
   year: number;
   link?: string;
   description?: string;
+  genre: string;  // новое поле жанр
 }
+
 
 interface MoviesState {
   movies: Movie[];
@@ -35,8 +39,69 @@ interface MoviesState {
   updateMovie: (movie: Movie) => void;
 }
 
+
+
+// src/app/store/useMoviesStore.ts
+
 export const useMoviesStore = create<MoviesState>((set) => ({
-  movies: [],
+  movies: [
+    {
+      id: 1,
+      title: 'Интерстеллар',
+      year: 2014,
+      genre: 'Фантастика',
+      link: 'https://www.youtube.com/embed/zSWdZVtXT7E',
+      description: 'Группа исследователей отправляется через червоточину в космос для спасения человечества.',
+    },
+    {
+      id: 2,
+      title: 'Побег из Шоушенка',
+      year: 1994,
+      genre: 'Драма',
+      link: 'https://www.youtube.com/embed/6hB3S9bIaco',
+      description: 'История о надежде и дружбе в тюрьме Шоушенк.',
+    },
+    {
+      id: 3,
+      title: 'Начало',
+      year: 2010,
+      genre: 'Фантастика',
+      link: 'https://www.youtube.com/embed/YoHD9XEInc0',
+      description: 'Профессиональный вор внедряется в сны, чтобы украсть или внедрить идею.',
+    },
+    {
+      id: 4,
+      title: 'Форрест Гамп',
+      year: 1994,
+      genre: 'Драма',
+      link: 'https://www.youtube.com/embed/bLvqoHBptjg',
+      description: 'Жизненный путь доброго и простодушного человека.',
+    },
+    {
+      id: 5,
+      title: 'Матрица',
+      year: 1999,
+      genre: 'Экшн',
+      link: 'https://www.youtube.com/embed/vKQi3bBA1y8',
+      description: 'Виртуальная реальность и борьба за свободу человечества.',
+    },
+    {
+      id: 6,
+      title: 'Король Лев',
+      year: 1994,
+      genre: 'Мультфильм',
+      link: 'https://www.youtube.com/embed/4sj1MT05lAA',
+      description: 'Приключения львенка Симбы, который становится королём джунглей.',
+    },
+    {
+      id: 7,
+      title: 'Джокер',
+      year: 2019,
+      genre: 'Триллер',
+      link: 'https://www.youtube.com/embed/zAGVQLHvwOY',
+      description: 'История превращения комика в опасного преступника.',
+    },
+  ],
 
   addMovie: (movie) =>
     set((state) => ({ movies: [...state.movies, movie] })),
