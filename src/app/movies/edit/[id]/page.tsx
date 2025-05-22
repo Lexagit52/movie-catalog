@@ -1,34 +1,48 @@
-// src/app/movies/add/page.tsx
+
 
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRouter, useParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import { useMoviesStore } from '@/app/store/useMoviesStore';
+import { Movie } from '@/app/store/useMoviesStore';
 
-export default function AddMoviePage() {
+export default function EditMoviePage() {
   const router = useRouter();
-  const addMovie = useMoviesStore((state) => state.addMovie);
+  const { id } = useParams<{ id: string }>();
+
+  const movieId = parseInt(id); // ✅ преобразуем в число
+
+  const movies = useMoviesStore((state) => state.movies);
+  const updateMovie = useMoviesStore((state) => state.updateMovie);
+
+  const movie = movies.find((m) => m.id === movieId); // ✅ сравнение number === number
 
   const [title, setTitle] = useState('');
   const [year, setYear] = useState('');
+
+  useEffect(() => {
+    if (movie) {
+      setTitle(movie.title);
+      setYear(String(movie.year));
+    }
+  }, [movie]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!title || !year) return;
 
-    addMovie({
-      id: Date.now(), // number
-      title,
-      year: parseInt(year), // ✅ преобразуем string -> number
-    });
-
+    updateMovie({ id: movieId, title, year: parseInt(year) }); // ✅ все числа
     router.push('/movies');
   };
 
+  if (!movie) {
+    return <p className="p-6">Фильм не найден</p>;
+  }
+
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Добавить фильм</h1>
+      <h1 className="text-2xl font-bold mb-4">Редактировать фильм</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block font-semibold">Название</label>
@@ -50,9 +64,9 @@ export default function AddMoviePage() {
         </div>
         <button
           type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
         >
-          Добавить
+          Сохранить
         </button>
       </form>
     </div>

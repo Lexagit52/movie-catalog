@@ -1,25 +1,30 @@
+// src/app/store/useMoviesStore.ts
 import { create } from 'zustand';
 
-export type Movie = {
+export interface Movie {
   id: number;
   title: string;
-  year: string;
-};
+  year: number;
+}
 
-type MoviesState = {
+interface MoviesState {
   movies: Movie[];
-  addMovie: (movie: Omit<Movie, 'id'>) => void;
+  addMovie: (movie: Movie) => void;
   removeMovie: (id: number) => void;
-};
+  updateMovie: (movie: Movie) => void;
+}
 
-export const useMoviesStore = create<MoviesState>((set) => ({
+export const useMoviesStore = create<MoviesState>((set, get) => ({
   movies: [],
-  addMovie: (movie: Omit<Movie, 'id'>) =>
+
+  addMovie: (movie) =>
+    set((state) => ({ movies: [...state.movies, movie] })),
+
+  removeMovie: (id) =>
+    set((state) => ({ movies: state.movies.filter((m) => m.id !== id) })),
+
+  updateMovie: (movie) =>
     set((state) => ({
-      movies: [...state.movies, { ...movie, id: Date.now() }],
-    })),
-  removeMovie: (id: number) =>
-    set((state) => ({
-      movies: state.movies.filter((movie) => movie.id !== id),
+      movies: state.movies.map((m) => (m.id === movie.id ? movie : m)),
     })),
 }));
