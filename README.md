@@ -1,37 +1,124 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎬 Movie Catalog
 
-## Getting Started
+Одностраничное веб-приложение-каталог фильмов, разработанное с использованием **Next.js**, **Zustand**, **Tailwind CSS** и **TypeScript**.
 
-First, run the development server:
+## 🧩 Описание проекта
+
+Movie Catalog — это веб-приложение, в котором пользователь может:
+
+- Просматривать список фильмов
+- Смотреть информацию о каждом фильме (видео, описание)
+- Добавлять и удалять фильмы
+- Отмечать фильмы как избранные
+- Отслеживать недавно просмотренные фильмы
+- Фильтровать фильмы по жанру
+
+
+## 🚀 Используемые технологии
+
+- **Next.js** — фреймворк React с поддержкой роутинга и SSR
+- **Zustand** — лёгкий менеджер состояния
+- **Tailwind CSS** — современный CSS-фреймворк для UI
+- **TypeScript** — строгая типизация
+
+
+## 📁 Структура проекта
+
+movie-catalog/
+├── app/
+│ ├── layout.tsx
+│ ├── page.tsx ← Главная
+│ └── movies/
+│ ├── page.tsx ← Каталог фильмов
+│ ├── add/page.tsx ← Добавление фильма
+│ ├── [id]/page.tsx ← Страница фильма
+│ ├── recent/page.tsx ← Недавно просмотренные
+│ ├── favorites/page.tsx ← Избранное
+├── components/
+│ ├── Header.tsx
+│ ├── Footer.tsx
+│ ├── MovieCard.tsx
+│ └── MovieForm.tsx
+├── store/
+│ └── useMoviesStore.ts ← Zustand-хранилище
+├── styles/
+│ └── globals.css
+├── public/
+├── README.md
+├── tailwind.config.ts
+├── tsconfig.json
+├── next.config.js
+
+markdown
+Копировать
+Редактировать
+
+## 📄 Страницы приложения
+
+1. **Главная** — краткое приветствие и навигация
+2. **Фильмы** — список всех фильмов
+3. **Добавить фильм** — форма для добавления фильма
+4. **Подробно** — страница с описанием фильма и встроенным видео
+5. **О приложении** — описание проекта
+6. **Избранное** — список добавленных в избранное фильмов
+7. **Последние** — последние просмотренные фильмы
+
+
+## ⚙️ Как запустить проект
+
+1. Клонируй репозиторий:
 
 ```bash
+git clone https://github.com/Lexagit52/movie-catalog.git
+cd movie-catalog
+Установи зависимости:
+
+bash
+Копировать
+Редактировать
+npm install
+# или
+yarn install
+Запусти локальный сервер:
+
+bash
+Копировать
+Редактировать
 npm run dev
-# or
+# или
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Открой http://localhost:3000 в браузере.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+🧠 Использование искусственного интеллекта
+При создании проекта использовался ИИ-помощник ChatGPT от OpenAI для:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Написания README.md
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Исправления ошибок и рефакторинга
 
-## Learn More
+Генерации структуры проекта по требованиям
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+🗂 Роутинг и компоненты
+Используется App Router из Next.js (/app)
 
-## Deploy on Vercel
+Навигация через <Link />
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Повторно используются компоненты  Header, Footer
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# movie-catalog
+Все стили реализованы через Tailwind CSS
+
+📌 Требования, реализованные в проекте
+Требование	Выполнено ✅
+SPA на Next.js	✅
+5+ страниц (роутинг)	✅
+Повторное использование компонентов	✅
+Добавление / удаление фильмов	✅
+Менеджер состояния (Zustand)	✅
+Использование Tailwind CSS	✅
+Приложение на TypeScript	✅
+Адаптивный интерфейс	✅
+Контроль версий (Git + GitHub)	✅
+README.md с описанием и запуском	✅
+Указание использования ИИ	✅
